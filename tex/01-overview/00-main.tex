@@ -1,0 +1,30 @@
+\subsection*{Overview}
+
+This assignment consists of two parts.
+
+In Part 1, we will be looking at goal-conditioned reinforcement learning and hindsight
+experience replay (HER). In particular, you will:
+\begin{enumerate}
+    \item Adapt an existing model (Deep Q-Network) to be goal-conditioned.
+    \item Run goal-conditioned DQN on two environments.
+    \item Implement Hindsight Experience Replay (HER) \cite{andrychowicz2017hindsight} \cite{kaelbling1993learning} on top of goal-conditioned
+    DQN.
+    \item Compare the performance with and without HER.
+\end{enumerate}
+In Part 2, we will be exploring meta-reinforcement learning algorithms. In particular, you
+will:
+\begin{enumerate}
+    \item Experiment with a black-box meta-RL method \cite{duan2016rl2} trained end-to-end.
+    \item Implement components of DREAM \cite{liu2020explore} to replace the end-to-end optimization objective.
+    \item Compare the performance of end-to-end versus decoupled optimization.
+\end{enumerate}
+We have provided you with starter code. All code for Part 1 is located in the directory \texttt{src/submission/goal\_conditioned\_rl} and all code
+for Part 2 is located in \texttt{src/submission/meta\_rl}.
+
+\subsection*{Submission}
+Submitting the Code and Experiment Runs: In order to turn in your code and experiment
+logs, run the \texttt{collect\_submission.sh} script located in \texttt{src/}:
+
+\begin{lstlisting}[language=bash]
+    bash collect_submission.sh
+\end{lstlisting}

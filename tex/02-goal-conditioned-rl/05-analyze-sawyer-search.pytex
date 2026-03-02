@@ -1,0 +1,25 @@
+\item \textbf{Analyzing HER for Sawyer Reach}
+
+If implemented correctly, HER should work for the second environment, Sawyer Reach.
+
+Compare the performance of the Sawyer arm with and without HER. Run the following commands:
+
+\begin{lstlisting}[language=bash]
+python -m goal_conditioned_rl.main --env=sawyer_reach --num_epochs=1000 --her_type no_hindsight
+python -m goal_conditioned_rl.main --env=sawyer_reach --num_epochs=1000 --her_type final
+\end{lstlisting}
+
+\begin{enumerate}[label=(\roman*)]
+    \item \points{1ei}
+    Submit the tensorboard screenshot comparing the \texttt{eval\_metrics} in your report. Please make sure that the screenshot contains BOTH the eval/success\_rate plot AND the eval/total\_reward plot.\\
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1ei(.*?)% <SCPD_SUBMISSION_TAG>_1ei', f.read(), re.DOTALL)).group(1))
+🐍
+
+    \item \points{1eii}
+    Discuss your findings: Compare the role of HER in Bit Flipping Environment and Sawyer Reach. Comment on the differences between the contribution of HER, if any.
+\end{enumerate}
+
+

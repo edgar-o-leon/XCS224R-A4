@@ -1,0 +1,28 @@
+\begin{thebibliography}{1}
+
+\bibitem{andrychowicz2017hindsight}
+Marcin Andrychowicz, Filip Wolski, Alex Ray, Jonas Schneider, Rachel Fong,
+  Peter Welinder, Bob McGrew, Josh Tobin, Pieter Abbeel, and Wojciech Zaremba.
+\newblock Hindsight experience replay.
+\newblock In {\em Neural Information Processing Systems (NeurIPS)}, 2017.
+
+\bibitem{kaelbling1993learning}
+Leslie~Pack Kaelbling.
+\newblock Learning to achieve goals.
+\newblock In {\em International Joint Conferences on Artificial Intelligence
+  (IJCAI)}, 1993.
+
+\bibitem{duan2016rl2}
+Yan Duan, John Schulman, Xi~Chen, Peter~L. Bartlett, Ilya Sutskever, and Pieter
+  Abbeel.
+\newblock {RL\textsuperscript{2}}: Fast reinforcement learning via slow
+  reinforcement learning.
+\newblock {\em arXiv preprint arXiv:1611.02779}, 2016.
+
+\bibitem{liu2020explore}
+Evan Liu, Aditi Raghunathan, Percy Liang, and Chelsea Finn.
+\newblock Explore then execute: Adapting without rewards via factorized
+  meta-reinforcement learning.
+\newblock {\em arXiv preprint arXiv:2008.02790}, 2020.
+
+\end{thebibliography}

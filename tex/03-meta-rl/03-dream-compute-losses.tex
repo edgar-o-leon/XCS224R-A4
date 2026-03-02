@@ -1,0 +1,27 @@
+\item \points{2c} \textbf{DREAM}
+
+In part (a), we observed some shortcomings of end-to-end and existing decoupled meta-RL approaches. In this problem, we'll implement some components of DREAM, which attempts to address these shortcomings, given the assumption that each meta-training task is assigned a unique \emph{problem ID} $\mu$. During meta-testing, DREAM does not assume access to the problem ID.
+
+From a high level, DREAM works by separately learning exploration and exploitation. To learn exploitation, DREAM learns an exploitation policy $\pi_\phi^{\text{exp}}(a \mid s, z)$ that tries to maximize returns during exploitation episodes, conditioned on a task encoding $z$. DREAM learns a \emph{encoder} $F_\psi(z \mid \mu)$ to produce the task encoding $z$ from the problem ID $\mu$. Critically, this encoder is trained in such a way that $z$ contains only the information necessary for the exploitation policy $\pi_\phi^{\text{exp}}$ to solve the task and achieve high returns.
+
+By training the encoder in this way, DREAM can then learn to explore by trying to recover the information contained in $z$. To achieve this, DREAM learns an exploration policy $\pi_\phi^{\text{exr}}$, which produces an exploration trajectory $\tau^{\text{exp}} = (s_0, a_0, r_0, \ldots)$ when rolled out during the exploration episode. To recover the information contained in $z$, DREAM fits a maximize the mutual information between the encoding $z$ and the exploration trajectory $\tau^{\text{exp}}$:
+\[
+\max I(F_\psi(z \mid \mu), \tau^{\text{exp}}).
+\]
+
+This objective can be optimized by maximizing the following variational lower bound:
+\[
+\mathcal{J}(\omega, \phi) = \mathbb{E}_{\mu \sim P_\mu, \tau^{\text{exp}} \sim \pi_\phi^{\text{exr}}}[\log q_\omega(z \mid \tau^{\text{exp}})]
+\]
+where $q_\omega(z \mid \tau^{\text{exp}})$ is a learned \emph{decoder}. Note that this decoder enables us to convert an exploration trajectory $\tau^{\text{exp}}$ into a task encoding $z$ that the exploitation policy uses. This is critical for meta-test time, where the problem ID is unavailable, and $z$ cannot be computed via the encoder $F_\psi(z \mid \mu)$.
+
+The objective $\mathcal{J}(\omega, \phi)$ is optimized with respect to both the decoder $q_\omega$ and the exploration policy $\pi_\phi^{\text{exr}}$.
+
+
+For simplicity, we parametrize the decoder $q_\omega(z \mid \tau^{\text{exp}})$ as a Gaussian $\mathcal{N}(g_\omega(\tau^{\text{exp}}), \sigma^2 I)$ centered at a learned $g_\omega(\tau^{\text{exp}})$ with unit variance. Then, $\log q_\omega(z \mid \tau^{\text{exp}})$ equals negative mean-squared error $-\|g_\omega(\tau^{\text{exp}}) - \text{stop-gradient}(z)\|_2^2$ plus some constants independent of $\omega$. Overall, \emph{maximizing} $\mathcal{J}(\omega, \phi)$ with respect to the decoder parameters $\omega$ is equal to \emph{minimizing} the below mean-squared error \textbf{with respect to} $\omega$:
+\[
+\mathbb{E}_{z \sim F_\psi(\mu)} \left[\|g_\omega(\tau^{\text{exp}}) - \text{stop-gradient}(z)\|_2^2\right].
+\]
+    
+\textbf{Code:} Fill in the \texttt{.compute\_losses} method of the \texttt{EncoderDecoder} in \texttt{encoder\_decoder.py} to implement the above equation for optimize $\mathcal{J}(\omega, \phi)$ with respect to the decoder parameters $\omega$.
+

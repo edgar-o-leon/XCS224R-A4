@@ -1,0 +1,47 @@
+\item \textbf{ Analyzing HER for Bit Flipping Environment}
+
+Once you have completed the previous problems, we can analyze the role of HER in goal-conditioned RL. We analyze the performance of HER as the size of the bit vector is increased from 6 to 25. 
+For each of the parts (i) to (iv), submit a tensorboard screenshot showing the \texttt{eval\_metrics} for different runs on the same plot (check the correct event files). Please make sure that each screenshot contains BOTH the eval/success\_rate plot AND the eval/total\_reward plot.
+
+Run the following commands from inside the submission directory:
+
+\begin{enumerate}[label=(\roman*)]
+    \item \points{1ci}
+    \begin{lstlisting}[language=bash]
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=6 --num_epochs=250 --her_type no_hindsight
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=6 --num_epochs=250 --her_type final
+    \end{lstlisting}
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1ci(.*?)% <SCPD_SUBMISSION_TAG>_1ci', f.read(), re.DOTALL)).group(1))
+🐍
+
+    \item \points{1cii}
+    
+    \begin{lstlisting}[language=bash]
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=15 --num_epochs=500 --her_type no_hindsight
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=15 --num_epochs=500 --her_type final
+    \end{lstlisting}
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1cii(.*?)% <SCPD_SUBMISSION_TAG>_1cii', f.read(), re.DOTALL)).group(1))
+🐍
+
+    \item \points{1ciii}
+    
+    \begin{lstlisting}[language=bash]
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=25 --num_epochs=1000 --her_type no_hindsight
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=25 --num_epochs=1000 --her_type final
+    \end{lstlisting}
+
+    Referencing the images generated in part (i) to (iii), explain why you expect the methods to perform in the observed manner for the varying numbers of bits.
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1ciii(.*?)% <SCPD_SUBMISSION_TAG>_1ciii', f.read(), re.DOTALL)).group(1))
+🐍
+
+\end{enumerate}
+    

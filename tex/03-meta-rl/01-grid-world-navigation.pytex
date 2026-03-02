@@ -1,0 +1,70 @@
+\item \textbf{Grid World Navigation with Buses}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/grid-world.png}
+    \caption{Two example tasks in the grid world domain. There are 4! different tasks, corresponding to different permutations of the buses in the corners.}
+    \label{fig:gridworld}
+\end{figure}
+
+We consider a grid world illustrated in Figure\ \ref{fig:gridworld}. From a high level, the agent is given a goal each episode and must reach it in as few steps as possible. To quickly get to the goal, the agent may ride a bus. This brings the agent to the destination of that bus, which is the other bus of the same color. In different tasks, the buses in the corners permute, while the buses in the center remain fixed. For example, in the left task in Figure\ \ref{fig:gridworld}, the center light blue bus's destination is the bottom right corner, while in the right task, its destination is the top right corner. Note that the goal is not part of the task, and all four corners are potential goals in all tasks. There is also a map at a fixed location in all of the tasks, which tells the agent the destination of each bus, when visited.
+
+More concretely, the \textbf{state} consists of 4 components
+
+\begin{itemize}
+    \item The agent's $(x, y)$-position in the grid
+    
+    \item A one-hot indicator of the object at the agent's current position (none, bus, map).
+    
+    \item A one-hot goal $g$ corresponding to one of the four possible goal locations in the corners (shown in green).
+    
+    \item A one-hot that is equal to the problem ID $\mu$ (defined below) if the agent is standing on the map, and 0 otherwise. Standing on the map effectively encodes the destination of each bus.
+\end{itemize}
+
+The agent begins every episode at the center of the grid, as in Figure\ \ref{fig:gridworld}. During an episode, the goal is held fixed, while it is re-sampled uniformly across the $4$ potential goal locations in each new episode.
+
+At each timestep, the agent can take one of 5 \textbf{actions}:
+
+\begin{itemize}
+    \item Move one cell up, down, left or right.
+    
+    \item Ride the bus that the agent is currently on. This teleports the agent to the other bus of the same color.
+\end{itemize}
+
+The agent receives $+1$ \textbf{reward} for reaching the correct goal position. The agent receives $-0.3$ \textbf{reward} at each timestep it is not at the correct goal, incentivizing it to reach the goal as quickly as possible. The episode ends if either the agent goes to any goal location (correct or incorrect) or if 20 timesteps have passed.
+
+Each task is associated with a \textbf{problem ID} $\mu$. The only thing that changes between tasks is the bus destinations: i.e., which colored bus appears in which outer corner. Therefore, there are $4! = 24$ different tasks. These tasks are \textbf{uniformly sampled} during meta-training and meta-testing.
+
+Throughout the assignment, we consider the meta-RL setting with one \emph{exploration episode} and one \emph{exploitation episode}. The objective is to maximize the returns achieved in the exploitation episode, which we refer to as the \emph{exploitation returns}. Note that the returns achieved in the exploration episode do not matter. During the exploitation episode, the agent is allowed to condition on the exploration episode $\tau^{\text{exp}} = (s_0, a_0, r_0, \ldots)$.
+
+\begin{enumerate}[label=(\roman*)]
+    \item \points{2ai} What returns are achieved by only taking the move action to get to the goal, without riding any buses: i.e., directly walking to the goal?
+    
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2ai(.*?)% <SCPD_SUBMISSION_TAG>_2ai', f.read(), re.DOTALL)).group(1))
+🐍
+
+    
+    \item \points{2aii} If the bus destinations (i.e., the problem ID) were known, what is the optimal returns that could be achieved in a single exploitation episode? Describe an exploitation policy that achieves such returns given knowledge of the bus destinations.
+    
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2aii(.*?)% <SCPD_SUBMISSION_TAG>_2aii', f.read(), re.DOTALL)).group(1))
+🐍
+    
+    \item \points{2aiii} Describe the exploration policy that discovers all of the bus destinations within the fewest number of timesteps.
+    
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2aiii(.*?)% <SCPD_SUBMISSION_TAG>_2aiii', f.read(), re.DOTALL)).group(1))
+🐍
+    
+    \item \points{2aiv} Given your answers in (ii) and (iii), what is the optimal exploitation returns achievable by a meta-RL agent?
+    
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2aiv(.*?)% <SCPD_SUBMISSION_TAG>_2aiv', f.read(), re.DOTALL)).group(1))
+🐍
+    
+\end{enumerate}
