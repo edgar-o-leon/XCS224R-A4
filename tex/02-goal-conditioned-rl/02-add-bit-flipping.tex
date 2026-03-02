@@ -1,0 +1,31 @@
+\item \points{1b} \textbf{Adding HER to Bit Flipping}
+
+With HER, the model is trained on the actual (state, goal, reward) tuples along with (state,
+goal, reward) tuples where the goal has been relabeled after the fact. The goals are relabeled to the state that was \textit{actually reached} and the rewards should be relabeled correspondingly. In other words, we pretend that the state we reached was our goal all along. HER
+gives us more examples of actions that lead to positive rewards, effectively doubling our
+experience (since we use the original episode as well as the relabeled one). The reward
+function for relabeled goals is the same as the environment reward function; for the bit
+flipping environment, the reward is $-1$ if the state and goal vector do not match and 0 if
+they do match.
+
+There are three different variations of HER: \texttt{final}, \texttt{random}, and \texttt{future}. Suppose the data collected in an episode consists of the following (state, goal, reward) tuples: $\{(s_t, g, r_t)\}_{t=0}^T$, where $t$ indicates each time step in the episode. Given a (state, goal, reward) tuple $(s_i, g_i, r_i)$ each variation of HER relabels the goal $g_i$ differently:
+
+\begin{itemize}
+    \item \texttt{final}: The final state of the episode is used as the goal.
+    
+    \item \texttt{random}: A random state in the episode is used as the goal.
+    
+    \item \texttt{future}: A random future state of the episode is used as the goal. Specifically, if you want to relabel the goal in the tuple $(s_i, g_i, r_i)$, only states $s_j$ with $j > i$ can be used.
+\end{itemize}
+
+Implementation Notes:
+
+\begin{itemize}
+    \item Always use \texttt{copy()} when assigning an existing numpy array to a new variable. NumPy does not create a new copy by default.
+    
+    \item When choosing a new goal for relabelling, choose the state corresponding to \texttt{next\_state} from the experience.
+\end{itemize}
+
+More details of these three implementations are in the comments of \texttt{trainer.py}. Implement the three variations of HER in the function \texttt{update\_replay\_buffer} in \texttt{trainer.py}. You \textbf{do not} need to submit a plot for this.
+
+

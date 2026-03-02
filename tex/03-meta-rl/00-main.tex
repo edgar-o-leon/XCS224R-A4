@@ -1,0 +1,64 @@
+\section{Meta-Reinforcement Learning}
+
+
+\textbf{Setup:} Please navigate to \texttt{src/submission/meta\_rl} and follow the instructions in the README.
+
+\textbf{Code Overview:} The main entry point for the code is via \texttt{src/submission/meta\_rl/scripts/dream.py} and \texttt{src/submission/meta\_rl/scripts/rl2.py}, which are the training scripts for DREAM and RL$^2$ respectively. Both of these can be invoked as follows:
+
+\begin{lstlisting}[language=bash]
+$ python -m meta_rl.scripts.{script} {experiment_name} -b environment=\"map\"
+\end{lstlisting}
+
+In this invocation, \texttt{\{script\}} can either be \texttt{dream} or \texttt{rl2} and \texttt{\{experiment\_name\}} can be any string with no white spaces. Results from this invocation are saved under \texttt{experiments/\{experiment\_name\}}. For example, to launch the DREAM training script and save the results to \texttt{experiments/dream}, you would run:
+
+\begin{lstlisting}[language=bash]
+$ python -m meta_rl.scripts.dream dream -b environment =\"map\"
+\end{lstlisting}
+
+To overwrite previous results, you would run:
+
+You can pass the \texttt{--force\_overwrite} or \texttt{-f} flag to run another experiment with the same experiment name, which will overwrite any previously saved files at the corresponding experiment directory. An example command for running DREAM is below:
+
+\begin{lstlisting}[language=bash]
+$ python -m meta_rl.scripts.dream dream -b environment=\"map\" -f
+\end{lstlisting}
+
+If you do not pass this flag, the scripts will not allow you to run two experiments with the same experiment name.
+
+There are two important subdirectories in each experiment directory:
+
+\begin{itemize}
+    \item \textbf{Tensorboard:} Each experiment includes a \texttt{experiments/experiment\_name/tensorboard} subdirectory, which will log important statistics about the training run, including the meta-testing returns under the \texttt{rewards/test} tag and the meta-training returns under the \texttt{rewards/training} tag. To view these, point Tensorboard at the appropriate directories. All curves are plotted with two versions, one where the x-axis is number of meta-training trials under \texttt{tensorboard/episode} and one where the x-axis is the number of environment steps \texttt{tensorboard/step}.
+    
+    \item \textbf{Visualizations:} Each experiment also includes a \texttt{experiments/experiment\_name/visualize} subdirectory. This directory includes \texttt{.gif} videos of the agent during meta-testing and is structured as follows. The top level of subdirectories identify how many meta-training trials have elapsed before the video.
+
+    Note that in the visualizations saved under \texttt{experiments/experiment\_name/visualize}:
+
+    \begin{itemize}
+        \item The agent is rendered as a red square.
+        
+        \item The grid cells that the agent has visited in the episode are rendered as small origin squares.
+        
+        \item There are four pairs of buses, rendered as blue, pink, cyan, and yellow squares.
+        
+        \item The map is rendered as a black square.
+        
+        \item The goal state is rendered as a green square, which obscures one of the buses.
+    \end{itemize}
+
+    
+    In experiments run with \texttt{dream.py}, the exploration episode is saved under \texttt{\{video\_num\}-exploration.gif} and the exploration episode is saved under \texttt{\{video\_num\}-exploitation.gif}. For example, the video under \texttt{experiments/dream/visualize/10000/0-exploration.gif} is the first exploration meta-testing episode after 10000 meta-training trials.
+    
+    In experiments run with \texttt{rl2.py}, \texttt{\{video\_num\}.gif} contains both the exploration and exploitation episodes, with the exploration episode first. For example, the video under \texttt{experiments/rl2/visualize/10000/0.gif} contains the first exploration and exploitation episode after 10000 meta-training trials.
+\end{itemize}
+
+You will implement two short methods inside the \texttt{embed/encoder\_decoder.py} file.
+
+\begin{enumerate}[(a)]
+    \input{03-meta-rl/01-grid-world-navigation}
+    \input{03-meta-rl/02-e2e-meta-rl}
+    \input{03-meta-rl/03-dream-compute-losses}
+    \input{03-meta-rl/04-dream-label-rewards}
+    \input{03-meta-rl/05-dream-analyze-returns}
+    \input{03-meta-rl/06-dream-analyze-behavior}
+\end{enumerate}

@@ -1,0 +1,12 @@
+\item \points{2d} To optimize $\mathcal{J}(\omega, \phi)$ with respect to the exploration policy parameters $\phi$, we expand out $\mathcal{J}(\omega, \phi)$ as a telescoping series:
+\[
+\mathcal{J}(\omega, \phi) = \mathbb{E}_{\mu \sim P_\mu(\mu)}[\mathcal{J}[g_\omega(z \mid s_0)]] + \mathbb{E}_{\mu \sim P_\mu(\mu), \tau^{\text{exp}} \sim \pi_\phi^{\text{exr}}} \left[\sum_{t=0}^{T-1} \log q_\omega(z \mid \tau_{t+1}^{\text{exp}}) - \log q_\omega(z \mid \tau_t^{\text{exp}})\right],
+\]
+where $\tau_t^{\text{exp}}$ denotes the exploration trajectory up to timestep $t$: $(s_0, a_0, r_0, \ldots, s_t)$. Only the second term depends on the exploration policy, and since it occurs per timestep, it can be maximized by treating it as the following intrinsic reward function $r_t^{\text{int}}$, which we can maximize with standard reinforcement learning:
+\begin{equation}
+r_t^{\text{int}}(a_t, r_t, s_{t+1}, \tau_{t+1}^{\text{exr}}, \mu) = \mathbb{E}_{z \sim F_\psi(\mu)} \left[\log q_\omega(z \mid \tau_{t+1}^{\text{exr}}) - \log q_\omega(z \mid \tau_t^{\text{exp}})\right].
+\end{equation}
+
+Note that $\tau_{t+1}^{\text{exr}}$ is equal to $\tau_t^{\text{exp}}$ with the additional observations of $(a_t, r_t, s_{t+1})$. The exploration policy is optimized to maximize this intrinsic reward $r_t^{\text{int}}$ instead of the extrinsic rewards $r_t$, which will maximize the objective $\mathcal{J}(\omega, \phi)$. Intuitively, $r_t^{\text{int}}$ is the ``information gain'' representing how much additional information about $z$ -- which encodes all the information to solve the task -- the tuple $s_{t+1}, r_t, a_t, s_t$ contains over what was already observed in $\tau_t^{\text{exp}}$.
+
+\textbf{Code:} Implement the reward function $r_t^{\text{int}}(a_t, r_t, s_{t+1}, \tau_{t+1}^{\text{exr}}, \mu)$ by filling in the \texttt{label\_rewards} function of \texttt{EncoderDecoder} in \texttt{encoder\_decoder.py}. Note that you'll need to make the same substitution for $\log q_\omega(z \mid \tau^{\text{exp}})$ in Equation (1) that we used in part a).

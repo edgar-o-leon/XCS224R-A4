@@ -1,0 +1,19 @@
+\item \points{1d} \textbf{ Analyzing HER with Baseline}
+
+Finally, we will compare the three versions of HER, with the baseline of not using HER:
+    
+    \begin{lstlisting}[language=bash]
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=15 --num_epochs=500 --her_type no_hindsight
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=15 --num_epochs=500 --her_type final
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=15 --num_epochs=500 --her_type random
+python -m goal_conditioned_rl.main --env=bit_flip --num_bits=15 --num_epochs=500 --her_type future
+    \end{lstlisting}
+    
+Since two of the commands (\texttt{her\_type no\_hindsight} and \texttt{her\_type final}) are identical to part (c), you \textbf{do not} need to run them again.
+    
+Explain your findings from these four runs and provide justification as to why you expect the methods to perform the way it did for the varying relabelling strategies.
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1d(.*?)% <SCPD_SUBMISSION_TAG>_1d', f.read(), re.DOTALL)).group(1))
+🐍

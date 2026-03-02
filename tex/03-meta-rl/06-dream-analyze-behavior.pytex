@@ -1,0 +1,8 @@
+\item \points{2f}
+
+Inspect the videos saved under \texttt{experiments/dream/visualize/28000} or a later step after DREAM converges. Describe the exploration and exploitation behaviors that DREAM has learned.
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2f(.*?)% <SCPD_SUBMISSION_TAG>_2f', f.read(), re.DOTALL)).group(1))
+🐍

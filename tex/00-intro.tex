@@ -1,0 +1,25 @@
+\section{Goals and Codebase}
+
+In this assignment you will experiment with two common methods of imitation learning: behavior cloning and DAgger. You will then have the opportunity to train and tune your agents in a variety of environments in the MuJoCo physics simulator (\url{https://mujoco.org/}). In lieu of a human demonstrator, we will provide demonstrations from a pre-trained expert policy.
+\begin{enumerate} 
+    \item Implement and train an imitation learning agent that can learn from expert data.
+    \item Analyze the shortcomings of behavior cloning and how DAgger can address some of these issues. 
+    \item Experiment with hyperparameters and explore how they affect performance.
+\end{enumerate}
+
+\includegraphics[width=\textwidth]{figures/hw1_codebase.png}
+We have provided you with starter code for this homework. A simplistic diagram of its structure is shown above. In the \texttt{agents} directory, you will define your main behavior cloning agent. This agent will contain contain references to its policy (or actor) and replay buffer. This agent will be fed into the BC trainer, which will contain its training loop.\\
+\\
+We recommend that you read the files in the following order. 
+
+\begin{itemize}
+\item \texttt{scripts/run\_hw1.py (read-only file)}
+\item \texttt{infrastructure/bc\_trainer.py}
+\item \texttt{agents/bc\_agent.py (read-only file)}
+\item \texttt{policies/MLP\_policy.py}
+\item \texttt{infrastructure/replay\_buffer.py}
+\item \texttt{infrastructure/utils.py}
+\item \texttt{infrastructure/pytorch\_util.py}
+\end{itemize}
+
+\newpage

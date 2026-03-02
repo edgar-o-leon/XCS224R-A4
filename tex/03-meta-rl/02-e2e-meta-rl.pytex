@@ -1,0 +1,30 @@
+\item \textbf{End-to-End Meta-Reinforcement Learning}
+
+In this problem, we'll analyze the performance of end-to-end meta-RL algorithms on the grid world. To do this, start by running the RL$^2$ agent on the grid world navigation task for 50,000 trials by running the below command. This should take approximately $2-3$ hours. Note that, by default, checkpoints of your models are saved every 20,000 iterations.
+Run inside the submission directory:
+\begin{lstlisting}[language=bash]
+python -m meta_rl.scripts.rl2 rl2 -b environment=\"map\"
+\end{lstlisting}
+
+Examine the Tensorboard results under the tag \texttt{reward/test} in the \texttt{experiments/rl2} directory. Please take a screenshot and submit the tensorboard results of the \texttt{reward/test} graph.
+
+\begin{enumerate}[label=(\roman*)]
+   \item \points{2bi} Attach the screenshot of the graph here. To 1 decimal place, what is the average meta-testing exploitation returns RL$^2$ achieves after training?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2bi(.*?)% <SCPD_SUBMISSION_TAG>_2bi', f.read(), re.DOTALL)).group(1))
+🐍
+
+   \item \points{2bii} Examine the videos saved under \texttt{experiments/rl2/visualize/36000/}. Describe the exploration and exploitation behaviors that RL$^2$ learns. Does RL$^2$ achieve the optimal returns?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2bii(.*?)% <SCPD_SUBMISSION_TAG>_2bii', f.read(), re.DOTALL)).group(1))
+🐍
+
+\end{enumerate}
+
+
+    
+

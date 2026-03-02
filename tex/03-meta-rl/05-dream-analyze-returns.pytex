@@ -1,0 +1,31 @@
+\item Check your implementation by running DREAM inside the submission directory:
+
+\begin{enumerate}[label=\roman*.]
+
+    \item \points{2ei}
+    \begin{lstlisting}[language=bash]
+python -m meta_rl.scripts.dream dream -b environment=\"map\"
+    \end{lstlisting}
+
+    Submit the plot for test returns under the tag \texttt{rewards/test} from the \texttt{experiments/dream} directory.
+        Submit the plot under \texttt{tensorboard/step}, not the plot under \texttt{tensorboard/episode}.
+        If your implementation in part (c) and (d) is correct, you should see the test returns training curve improve within 30 minutes of training.
+        By around 40 minutes, the test returns curve should begin to look different from RL$^2$. The total run should take around 2-3 hours.
+    
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2ei(.*?)% <SCPD_SUBMISSION_TAG>_2ei', f.read(), re.DOTALL)).group(1))
+🐍
+
+    \item \points{2eii} Does DREAM achieve optimal returns in your results? Based on what you know about DREAM, do these results align with your expectations? Why or why not?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2eii(.*?)% <SCPD_SUBMISSION_TAG>_2eii', f.read(), re.DOTALL)).group(1))
+🐍
+
+    \item \points{2e} Include your TensorBoard training logs from \texttt{experiments/dream/tensorboard/episode} in your submission. The autograder will parse these logs and verify that your DREAM implementation achieves a maximum test reward of at least 0.69 under the \texttt{reward/test} tag.
+    You can run \texttt{collect\_submission.sh} as needed to generate a zip with the relevant information.
+
+\end{enumerate}
+    

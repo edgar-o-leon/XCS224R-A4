@@ -1,0 +1,96 @@
+\section{Goal Conditioned Reinforcement Learning}
+
+In Part 1, we will be running goal-conditioned $Q$-learning on two problems:
+\begin{enumerate}
+\item a toy problem where we flip bits in a bit vector to match it to the current goal vector
+\item move the end effector of a simulated robotic arm to the desired goal position
+\end{enumerate}
+
+Applying hindsight relabeling to a goal-conditioned reinforcement learning setting is one of the most promising and commonly-used ways to improve sample efficiency and exploration challenges of RL!
+
+\textbf{Setup:} Please navigate to \texttt{src/submission/goal\_conditioned\_rl} and follow the instructions in the \texttt{README.md}.
+
+\textbf{Part 1 Code Overview:} The code consists of several files to enable $Q$-learning. All code
+for Part 1 is located in the directory \texttt{src/submission/goal\_conditioned\_rl}. You are expected to write
+the code in the following files: \texttt{run\_episode.py}, \texttt{trainer.py}. A brief description for the
+codebase is provided here:
+
+\begin{enumerate}
+    \item \texttt{trainer.py}: The main training loop. Alternates between collecting transitions
+using $Q$-value networks and training the networks on collected transitions.
+\item \texttt{run\_episode.py}: Collects an episode using the current $Q$-value network, and returns
+the transitions, collected reward and whether the agent was successful during the
+episode.
+\item \texttt{replay\_buffer.py}: Buffer for storing the transitions collected in the environment.
+\item  \texttt{q\_network.py}: Creates a feedforward neural network with one hidden layer. This
+neural net represents our $Q$-network.
+\item  \texttt{bit\_flip\_env.py}: The source code for the bit flipping environment, which is set up
+to follow the gym API with an \texttt{\_\_init\_\_}, \texttt{reset} and \texttt{step} functions.
+\item \texttt{sawyer\_action\_discretize.py}: Wraps the SawyerReachXYEnv from multiworld environment and converts the continuous action space into a discrete action space with
+a simplified 2D observation space.
+\item \texttt{main.py}: Main file to configure the experiment.
+\end{enumerate}
+
+\textbf{Environments:}
+
+You will be running RL methods on two environments:
+
+\textbf{Environment 1: Bit Flipping Environment}
+In the bit-flipping environment,
+the state is a binary vector with
+length $n$. The goal is to reach a
+known goal vector, which is also
+a binary vector with length $n$. At
+each step, we can flip a single bit
+in the vector (changing a 0 to 1 or
+a 1 to 0). This environment can
+very easily be solved without reinforcement learning, but we will
+use the DQN algorithm to understand how adding hindsight relabelling  (HER) can improve performance. An example of this environment is shown in Table \ref{fig:bitflip}.
+
+
+The bit flipping environment is an example of an environment with sparse rewards. At
+each step, we receive a reward of -1 when the goal and state vector do not match and
+a reward of 0 when they do. With a larger vector size, we receive fewer non-negative
+rewards.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{ccccc}
+\toprule
+\textbf{Timestep} & \textbf{Current State} & \textbf{Action} & \textbf{Reward} & \textbf{Next State} \\
+\midrule
+1 & [1,0,0,0,1,1] & 0 & -1 & [0,0,0,0,1,1] \\
+2 & [0,0,0,0,1,1] & 5 & -1 & [0,0,0,0,1,0] \\
+3 & [0,0,0,0,1,0] & 3 & 0 & [0,0,0,1,1,0] \\
+\bottomrule
+\end{tabular}
+\caption{Illustration of an example bit flipping environment with $n = 6$. The initial state of the environment is [1,0,0,0,1,1] and the goal is to reach the state [0,0,0,1,1,0].}
+\label{fig:bitflip}
+\end{table}
+
+\textbf{Environment 2: 2D Sawyer Arm (Figure \ref{fig:sawyer})}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.3\textwidth]{figures/sawyer.png}
+\caption{Illustration of an example Sawyer environment.}
+\label{fig:sawyer}
+\end{figure}
+
+The Sawyer Arm (see Figure \ref{fig:sawyer}) is a multi-jointed robotic arm for grasping 
+and reaching (\href{https://robots.ieee.org/robots/sawyer/}{see more details here}). The arm operates
+in a 2D space, and the goal is to move the robot to a set of coordinates. The sawyer reach is an example of a dense reward environment,
+where the reward is given by negative Euclidean distance between the
+robot arm and the goal state. The end-effector (EE) is constrained to
+a 2-dimensional rectangle parallel to a table. The action controls EE
+position. The state is the XY position of the EE and the goal is an XY
+position of the EE.
+
+\begin{enumerate}[(a)]
+    \input{02-goal-conditioned-rl/01-goal-conditioned-rl}
+    \input{02-goal-conditioned-rl/02-add-bit-flipping}
+    \input{02-goal-conditioned-rl/03-analyze-bit-flip}
+    \input{02-goal-conditioned-rl/04-analyze-baseline}
+    \input{02-goal-conditioned-rl/05-analyze-sawyer-search}
+    \input{02-goal-conditioned-rl/06-bitflip-logs}
+\end{enumerate}
