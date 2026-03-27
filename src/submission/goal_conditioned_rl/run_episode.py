@@ -61,6 +61,21 @@ def run_episode(
         # break the episode if done=True
 
         ### START CODE HERE ###
+        state_goal = np.concatenate([state, goal_state]).astype(np.float32)
+        q_input = torch.from_numpy(state_goal).unsqueeze(0)
+        with torch.no_grad():
+            q_values = q_net(q_input)
+        action = torch.argmax(q_values, dim=1).item()
+        next_state, reward, done, info = env.step(action)
+        episode_experience.append(
+            (state.copy(), action, reward, next_state.copy(), goal_state.copy())
+        )
+        episodic_return += reward
+        state = next_state
+        if info["successful_this_state"]:
+            succeeded = True
+        if done:
+            break
         ### END CODE HERE ###
 
     return episode_experience, episodic_return, succeeded
