@@ -162,6 +162,8 @@ class EncoderDecoder(Embedder, relabel.RewardLabeler):
         # anything about this.
 
         ### START CODE HERE ###
+        z = id_embeddings.detach().unsqueeze(1)
+        decoder_context_loss = ((all_decoder_embeddings - z) ** 2).sum(-1)
         ### END CODE HERE ###
         # ********************************************************
         # ******************* YOUR CODE HERE *********************
@@ -262,6 +264,10 @@ class EncoderDecoder(Embedder, relabel.RewardLabeler):
         # See Equation (5) of the DREAM paper if you're curious.
 
         ### START CODE HERE ###
+        z = id_embeddings.detach().unsqueeze(1)
+        distances = ((z - all_decoder_embeddings) ** 2).sum(-1)
+        logq = -distances
+        rewards = logq[:, 1:] - logq[:, :-1]
         ### END CODE HERE ###
         # ********************************************************
         # ******************* YOUR CODE HERE *********************
